@@ -110,11 +110,13 @@ endif(TARGET_LINUX)
 # Source files.
 set(GORP_CPPS
   core/core.cpp
+  core/game.cpp
   core/guru.cpp
   core/prefs.cpp
   core/terminal/colour-maps.cpp
   core/terminal/terminal.cpp
   core/terminal/window.cpp
+  ui/element.cpp
   util/file/binpath.cpp
   util/file/filereader.cpp
   util/file/fileutils.cpp

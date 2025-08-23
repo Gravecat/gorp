@@ -433,7 +433,6 @@ void Terminal::load_sfxr()
         }
         sfxr_samples_.insert({filename, samp});
     }
-    exit(0);
 }
 
 // Load the sprites from the static data.

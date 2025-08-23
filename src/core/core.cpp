@@ -19,6 +19,7 @@
 #include "3rdparty/sam/sam.hpp"
 #include "cmake/source.hpp"
 #include "core/core.hpp"
+#include "core/game.hpp"
 #include "core/guru.hpp"
 #include "core/prefs.hpp"
 #include "core/terminal/terminal.hpp"
@@ -30,12 +31,12 @@
 namespace gorp {
 
 // Constructor, sets up the Core object.
-Core::Core() : guru_ptr_(nullptr), prefs_ptr_(nullptr), terminal_ptr_(nullptr) { }
+Core::Core() : game_ptr_(nullptr), guru_ptr_(nullptr), prefs_ptr_(nullptr), terminal_ptr_(nullptr) { }
 
 // Cleans up all Core-managed objects.
 void Core::cleanup()
 {
-    //game_ptr_.reset(nullptr);
+    game_ptr_.reset(nullptr);
     terminal_ptr_.reset(nullptr);
     guru_ptr_.reset(nullptr);
     prefs_ptr_.reset(nullptr);
@@ -93,6 +94,13 @@ void Core::find_gamedata()
     if (data_version != expected_version) guru_ptr_->halt("Unexpected gamedata version!", expected_version, data_version);
 }
 
+// Returns a reference to the Game manager object.
+Game& Core::game() const
+{
+    if (!game_ptr_) throw std::runtime_error("Attempt to access null Game pointer!");
+    return *game_ptr_;
+}
+
 // Used internally only to apply the most powerful possible method to kill the process, in event of emergency.
 void Core::great_googly_moogly_its_all_gone_to_shit()
 {
@@ -134,7 +142,7 @@ void Core::init_core(std::vector<std::string> parameters)
         {
             prefs_ptr_ = std::make_unique<Prefs>();
             terminal_ptr_ = std::make_unique<Terminal>();
-            //game_ptr_ = std::make_unique<Game>();
+            game_ptr_ = std::make_unique<Game>();
         }
         sam::SAMDict::load_strings();
     }
@@ -211,7 +219,6 @@ int main(int argc, char** argv)
     }
 
     // Start the ball rolling. Everything from this point will be handled by the game manager.
-    /*
     try { game().begin(); }
     catch(const GuruMeditation &e)
     {
@@ -231,7 +238,6 @@ int main(int argc, char** argv)
             core().destroy_core(EXIT_FAILURE);
         }
     }
-    */
 
     // Trigger cleanup code.
     core().destroy_core(EXIT_SUCCESS);

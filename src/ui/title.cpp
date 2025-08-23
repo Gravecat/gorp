@@ -13,6 +13,7 @@
 #include "SFML/Audio.hpp"
 #include "ui/title.hpp"
 #include "util/file/fileutils.hpp"
+#include "util/file/yaml.hpp"
 #include "util/math/random.hpp"
 
 namespace gorp {
@@ -20,38 +21,17 @@ namespace gorp {
 // Simple constructor, sets things up.
 TitleScreen::TitleScreen() : blinking_(false), music_(nullptr), title_screen_window_(nullptr)
 {
-    /*
-    Datafile &data = datafile();
+    YAML title_data(core().datafile("misc/title.yml"));
+    if (!title_data.is_map()) throw GuruMeditation("misc/title/yml: Invalid file format");
 
     // Load the backronym and random phrase for the title screen.
-    data.set_index("Data:Title");
-    data.confirm_tag(Datafile::DATA_BLOCK);
-    uint32_t word_count = data.read_data<uint32_t>();
-    std::vector<std::string> g_words(word_count);
-    for (unsigned int i = 0; i < word_count; i++)
-        g_words.at(i) = data.read_string();
-
-    word_count = data.read_data<uint32_t>();
-    std::vector<std::string> r_words(word_count);
-    for (unsigned int i = 0; i < word_count; i++)
-        r_words.at(i) = data.read_string();
-
-    word_count = data.read_data<uint32_t>();
-    std::vector<std::string> p_words(word_count);
-    for (unsigned int i = 0; i < word_count; i++)
-        p_words.at(i) = data.read_string();
-    
-    word_count = data.read_data<uint32_t>();
-    std::vector<std::string> phrases(word_count);
-    for (unsigned int i = 0; i < word_count; i++)
-        phrases.at(i) = data.read_string();
-    
+    std::vector<std::string> g_words = title_data.get_seq("g_words");
+    std::vector<std::string> r_words = title_data.get_seq("r_words");
+    std::vector<std::string> p_words = title_data.get_seq("p_words");
+    std::vector<std::string> phrases = title_data.get_seq("phrases");
     backronym_ = g_words.at(random::get<int>(0, g_words.size() - 1)) + " of " + r_words.at(random::get<int>(0, r_words.size() - 1)) + " " +
         p_words.at(random::get<int>(0, p_words.size() - 1));
     phrase_ = phrases.at(random::get<int>(0, phrases.size() - 1));
-
-    data.confirm_tag(Datafile::DATA_BLOCK_END);
-    */
 
     // Load the title-screen music.
     music_vec_ = fileutils::file_to_char_vec(core().datafile("ogg/march.ogg"));
@@ -84,7 +64,7 @@ TitleScreen::TitleOption TitleScreen::render()
     {
         if (!sam_played && audio_timer.getElapsedTime().asMilliseconds() > 1500)
         {
-            //sam::sam_say(backronym_ + ".");
+            sam::sam_say(backronym_ + ".");
             sam_played = true;
         }
         else if (!music_started && audio_timer.getElapsedTime().asMilliseconds() > 5000)

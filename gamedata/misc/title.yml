@@ -1,0 +1,62 @@
+# misc/title.yml -- Words list which are combined together to make a backronym for GORP on the title screen.
+# Also includes various random phrases displayed above the logo.
+
+# SPDX-FileType: SOURCE
+# SPDX-FileCopyrightText: Copyright 2025 Raine Simmons <gc@gravecat.com>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+g_words: [ "galaxies", "galaxy", "gale", "gallows", "gambits", "gamuts", "gangs", "garden", "gardens", "gargoyles", "garrison", "garrisons", "gate", "gates",
+  "gateways", "gauntlet", "gauntlets", "gears", "gems", "geodes", "geometries", "gestures", "geysers", "ghasts", "ghosts", "ghouls", "giants", "gibbets",
+  "gildings", "glaciers", "glades", "gladiators", "glaives", "glamours", "gleams", "glimmer", "glimmers", "glimpses", "globes", "gloom", "glories", "glory",
+  "gluts", "glyphs", "gnarls", "gnomes", "goblets", "goblins", "gods", "gold", "goldsmiths", "golems", "gore", "gorges", "gorgets", "gorgons", "gourds",
+  "grapes", "gravitas", "gratitude", "gratitudes", "grave", "graves", "graveyards", "greatness", "greaves", "greed", "greediness", "grid", "grids", "grief",
+  "grievances", "griffins", "grimaces", "grimoire", "grimoires", "grindstones", "gripes", "grit", "grooves", "grotesqueries", "grottoes", "grounds", "groves",
+  "grounds", "growls", "grumbles", "grumps", "guardian", "guardians", "guards", "guides", "guilds", "guiles", "guise", "gulches", "gulfs", "gusts", "gyres" ]
+
+r_words: [ "rabid", "radiant", "radical", "ragged", "raging", "rakish", "rambunctious", "rambling", "rampaging", "rampant", "rancid", "rancorous",
+  "randomized", "rapacious", "rapid", "rarefied", "rasping", "raucous", "ravaged", "ravaging", "ravening", "ravenous", "raw", "rebellious", "recalcitrant",
+  "reckless", "reckoning", "reclusive", "recondite", "recurring", "recursive", "redolent", "reeling", "reflective", "regal", "regnant", "reigning",
+  "rejuvenating", "rekindled", "relapsed", "relentless", "remnant", "remorseless", "rending", "renegade", "renewed", "renowned", "repentant", "reproachful",
+  "repugnant", "repulsive", "requisite", "resigned", "resilient", "resistant", "resolute", "resonant", "resonating", "resplendent", "restful", "restive",
+  "restless", "restorative", "retaliatory", "retentive", "reticent", "retiring", "retrograde", "revelatory", "reverent", "reviling", "reviving", "revolting",
+  "revolutionary", "revolving", "rhapsodic", "rhetorical", "rhyming", "rhythmic", "rich", "riddling", "righteous", "rigid", "riling", "rimy", "ringing",
+  "riotous", "ripping", "ritualistic", "riveting", "roaming", "roaring", "roasting", "rogue", "roguish", "roiling", "rollicking", "romantic", "rooted",
+  "rotten", "rotting", "round", "rounded", "roving", "royal", "ruddy", "ruffled", "rugged", "ruined", "ruinous", "ruminative", "rumbling", "runic", "ruptured",
+  "rupturing", "rusted", "rustic", "rustling", "ruthless" ]
+
+p_words: [ "pacts", "pain", "palaces", "paladins", "palisades", "pallors", "pandemonium", "pantheons", "parables", "paradigms", "paradoxes", "paragons",
+  "parasites", "parchments", "pariahs", "parlors", "paroxysms", "partisans", "passages", "pastures", "pathfinders", "pathos", "patriarchs", "patrons", "pawns",
+  "peace", "peaks", "pearls", "peculiars", "pedestals", "penalties", "penances", "pendants", "pendulums", "penitents", "penumbras", "people", "perceptions",
+  "peril", "perils", "perspectives", "perplexities", "pests", "petals", "phantasms", "phantoms", "phases", "phenomena", "philosophies", "philtres", "phoenixes",
+  "phrases", "physiques", "pieties", "pilgrimages", "pillages", "pillars", "pinnacles", "pioneers", "piracy", "pits", "places", "plagues", "plains", "plans",
+  "plateaus", "pleas", "pledges", "plights", "plots", "plumes", "plunder", "poems", "poisons", "politics", "ponderings", "pools", "portals", "portents",
+  "possibilities", "potions", "poultices", "poverty", "power", "powers", "pranks", "prayers", "precepts", "precipices", "predators", "predicaments", "preludes",
+  "premises", "premonitions", "preparations", "pressures", "prestiges", "pretenses", "pretexts", "prey", "pride", "prisms", "prisons", "prizes", "problems",
+  "processions", "proclamations", "prodigies", "professions", "profits", "progress", "prohibitions", "projects", "promises", "promontories", "prophecies",
+  "prose", "prosperities", "protections", "protests", "prowess", "prowlers", "pryings", "psyches", "puddles", "pugilists", "puissance", "punishment",
+  "punishments", "puppeteers", "puppets", "purgatories", "purgatory", "pursuits", "puzzles", "pyres" ]
+
+phrases: [
+    "Fortune favours the bold in the treacherous lands of...",
+    "Alea iacta est - the die is cast...",
+    "Are you enough of a hero to brave the perils of...",
+    "oh god how did this get here I am not good with computer",
+    "It is the nineties and there is time for...",
+    "Fear and loathing in...",
+    "Unfortunately, I am the high king of...",
+    "Hey, you. You're finally awake.",
+    "Uneasy lies the head that wears a crown...",
+    "A rose by any other name would still have thorns...",
+    "Do not believe in miracles - rely on them.",
+    "Do not meddle in the affairs of wizards, for they are subtle and quick to anger.",
+    "Even the smallest candle burns brighter in the dark...",
+    "He who fights with monsters might take care lest he thereby become a monster.",
+    "If you gaze for long into an abyss, the abyss gazes also into you...",
+    "In the land of the blind, the one-eyed man is king...",
+    "Live forever, or die trying...",
+    "That which does not kill you makes you stronger...",
+    "The darkest hour is just before the dawn...",
+    "A journey of a thousand miles begins with a single step...",
+    "It's better to burn out than to fade away...",
+    "Ba harmy putar? Glarch!"
+]

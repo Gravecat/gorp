@@ -35,21 +35,8 @@ public:
     Window* add_window(Vector2 new_size, Vector2 new_pos = {0, 0});    // Adds a new Window to the stack.
     void    remove_window(Window* win); // Removes a Window from the stack. This is called automatically from Window's destructor.
 
-    int     alagard_strlen(const std::string str) const;    // Returns the width IN PIXELS of a string rendered in the Alagard font.
 private:
-    // Stats for rendering the Alagard bitmap fonts.
-    struct alagard_char
-    {
-        uint8_t     width;                  // The pixel width of the character.
-        uint32_t    pos_top, pos_bottom;    // The X pixel position on the sprite sheet of the top and bottom halves
-        uint8_t     pad_left, pad_right;    // The left- and right-side pixel padding.
-    };
-    static const std::vector<alagard_char> alagard_vec;
-    static constexpr int    ALAGARD_PIXEL_Y =   1784;   // The vertical position of the Alagard font on the sprite sheet.
-
     // Internal rendering code, called by Window::print() and Window::put(), with the complex part handled by Terminal.
-    void        alagard_print(sf::RenderTexture &tex, const std::string &str, Vector2 pixel_pos, Colour colour);
-    std::string alagard_process(const std::string &str) const;  // Processes a string, replacing every letter with one that can be rendered in the Alagard font.
     void        print(sf::RenderTexture &tex, std::string str, Vector2 pos, Colour colour, Font font = Font::NORMAL);
     void        put(sf::RenderTexture &tex, int ch, Vector2 pos, Colour colour, Font font = Font::NORMAL);
 

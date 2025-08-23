@@ -31,15 +31,6 @@
 
 namespace gorp {
 
-// Alagard bitmap font defintitions. In order, the numbers are: width, pos_top, pos_bottom, pad_left, pad_right.
-const std::vector<Terminal::alagard_char> Terminal::alagard_vec = {
-    { 8, 0, 248, 1, 0 }, { 8, 8, 256, 0, 1 }, { 8, 16, 264, 1, 1 }, { 9, 24, 272, 0, 1 }, { 9, 33, 281, 0, 0 }, { 9, 42, 290, 0, 0 },       // A-F
-    { 8, 51, 299, 1, 1 }, { 9, 60, 308, 0, 0 }, { 4, 68, 316, 0, 0 }, { 3, 72, 320, 0, 1 }, { 9, 75, 323, 0, 0 }, { 7, 84, 332, 0, 0 },     // G-L
-    { 12, 91, 339, 0, 0}, { 10, 103, 351, 0, 0}, { 8, 113, 361, 1, 1}, { 8, 128, 376, 0, 1}, { 9, 136, 384, 1, 0}, { 9, 145, 393, 0, 0},    // M-R
-    { 8, 154, 402, 1, 1}, { 9, 162, 410, 0, 1}, { 10, 171, 419, 0, 0}, { 9, 181, 429, 0, 1}, { 11, 190, 438, 0, 1}, { 9, 201, 449, 0, 0},   // S-X
-    { 9, 210, 458, 0, 1}, { 8, 219, 467, 0, 1}, { 7, 227, 475, 0, 1}, { 10, 234, 482, 1, 1}, { 2, 244, 492, 1, 1}   // Y-Z, ?, /, .
-};
-
 // Constructor, sets up default values but does not initialize the faux-terminal.
 Terminal::Terminal() : current_frame_(nullptr), previous_frame_(nullptr), degauss_sound_(nullptr), sfxr_(nullptr), sprite_max_(0), window_pixels_({0, 0})
 {
@@ -126,97 +117,6 @@ Terminal::~Terminal()
 Window* Terminal::add_window(Vector2 new_size, Vector2 new_pos) {
     window_stack_.push_back(std::make_unique<Window>(new_size, new_pos));
     return window_stack_.back().get();
-}
-
-void Terminal::alagard_print(sf::RenderTexture &tex, const std::string &str, Vector2 pixel_pos, Colour colour)
-{
-    Prefs &pref = prefs();
-    const std::string processed = alagard_process(str);
-    int x_pos = 0;
-    for (unsigned int i = 0; i < processed.size(); i++)
-    {
-        char ch = processed.at(i);
-        if (ch == 29) { x_pos += 8; continue; } // space
-        alagard_char al = alagard_vec.at(ch);
-        if (i > 0) x_pos += al.pad_left;
-        
-        // Calculate the texture rectangles for the sprite sheet.
-        const sf::IntRect texture_rect_top(sf::Vector2i(al.pos_top, ALAGARD_PIXEL_Y), sf::Vector2i(al.width, TILE_SIZE));
-        const sf::IntRect texture_rect_bot(sf::Vector2i(al.pos_bottom, ALAGARD_PIXEL_Y), sf::Vector2i(al.width, TILE_SIZE));
-
-        // Make sprites from the tilesheet texture.
-        sf::Sprite sprite_top(sprite_sheet_, texture_rect_top);
-        sf::Sprite sprite_bot(sprite_sheet_, texture_rect_bot);
-        const sf::Vector2f scaling(pref.tile_scale(), pref.tile_scale());
-        sprite_top.setScale(scaling);
-        sprite_bot.setScale(scaling);
-
-        // Set the sprites' colour.
-        sf::Color sf_col = ColourMap::colour_to_sf(colour);
-        if (pref.shader()) // Make the colour more vibrant if we're using a shader.
-        {
-            sf_col.r = std::min(255, static_cast<int>(sf_col.r * 1.2f));
-            sf_col.g = std::min(255, static_cast<int>(sf_col.g * 1.2f));
-            sf_col.b = std::min(255, static_cast<int>(sf_col.b * 1.2f));
-        }
-        sprite_top.setColor(sf_col);
-        sprite_bot.setColor(sf_col);
-
-        // Position and scale the sprites, then render them.
-        sprite_top.setPosition(sf::Vector2f((pixel_pos.x + x_pos) * scaling.x, pixel_pos.y * scaling.y));
-        sprite_bot.setPosition(sf::Vector2f((pixel_pos.x + x_pos) * scaling.x, (pixel_pos.y + TILE_SIZE) * scaling.y));
-
-        // Draw the sprites.
-        tex.draw(sprite_top);
-        tex.draw(sprite_bot);
-
-        // Move the render position for the next character.
-        x_pos += al.width + al.pad_right;
-    }
-}
-
-// Processes a string, replacing every letter with one that can be rendered in the Alagard font.
-std::string Terminal::alagard_process(const std::string &str) const
-{
-    std::string result = str;
-    for (unsigned int i = 0; i < result.size(); i++)
-    {
-        char ch = result[i];
-        if (ch >= 'A' && ch <= 'Z') ch -= 65;
-        else if (ch >= 'a' && ch <= 'z') ch -= 97;
-        else if (ch == ' ') ch = 29;
-        else if (ch == '?') ch = 26;
-        else if (ch == '/') ch = 27;
-        else if (ch == '.') ch = 28;
-        else
-        {
-            core().nonfatal("Invalid character in Alagard string: " + std::string(1, ch), Core::CORE_WARN);
-            ch = 26;
-        }
-        result.at(i) = ch;
-    }
-    return result;
-}
-
-// Returns the width IN PIXELS of a string rendered in the Alagard font.
-int Terminal::alagard_strlen(const std::string str) const
-{
-    std::string processed = alagard_process(str);
-    int len = 0;
-    for (unsigned int i = 0; i < processed.size(); i++)
-    {
-        char ch = processed.at(i);
-        if (ch < 0 || ch > 29) throw std::runtime_error("Invalid character in Alagard string: " + std::string(1, ch));
-        if (ch == 29) len += 8;
-        else
-        {
-            alagard_char al = alagard_vec.at(ch);
-            len += al.width;
-            if (i > 0) len += al.pad_left;
-            if (i < processed.size() - 1) len += al.pad_right;
-        }
-    }
-    return len;
 }
 
 // Refreshes the terminal after rendering.
@@ -514,7 +414,7 @@ void Terminal::put(sf::RenderTexture &tex, int ch, Vector2 pos, Colour colour, F
     }
 
     // Check for valid sprite position.
-    if (static_cast<uint32_t>(ch) >= sprite_max_) throw GuruMeditation("Invalid sprite tile!", ch);
+    if (static_cast<uint32_t>(ch) >= sprite_max_ * (half_font ? 2 : 1)) throw GuruMeditation("Invalid sprite tile!", ch);
 
     // Calculate the coordinates on the sprite sheet.
     int tile_x, tile_y;

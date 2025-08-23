@@ -19,6 +19,7 @@ public:
                     YAML(const std::string& filename, bool allow_backslash = false);    // Calls load_file() when constructing.
     std::string     get(int index) const;                       // Retrieves a value from a sequence, as a string.
     YAML            get_child(const std::string& key) const;    // Retrieves a child noderef of this tree.
+    std::vector<std::string>    get_seq(const std::string &key) const;  // Retrieves all values of a sequence.
     bool            is_map() const;                             // Checks if the noderef points to a valid map.
     bool            is_seq() const;                             // Checks if the noderef points to a valid sequence.
     bool            key_exists(const std::string& key) const;   // Checks if a given key exists.

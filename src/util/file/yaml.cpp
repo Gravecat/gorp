@@ -33,6 +33,18 @@ YAML YAML::get_child(const std::string& key) const
     return new_yaml;
 }
 
+// Retrieves all values of a sequence.
+std::vector<std::string> YAML::get_seq(const std::string &key) const
+{
+    if (!key_exists(key)) throw GuruMeditation("Missing YAML key: " + key);
+    YAML yaml = get_child(key);
+    if (!yaml.is_seq()) throw GuruMeditation("Invalid YAML key (not a sequence): " + key);
+    std::vector<std::string> vec(yaml.size());
+    for (int i = 0; i < yaml.size(); i++)
+        vec.at(i) = yaml.get(i);
+    return vec;
+}
+
 // Checks if the noderef points to a valid map.
 bool YAML::is_map() const { return noderef().is_map(); }
 

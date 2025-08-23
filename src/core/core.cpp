@@ -26,6 +26,7 @@
 #include "util/file/binpath.hpp"
 #include "util/file/fileutils.hpp"
 #include "util/file/yaml.hpp"
+#include "util/process.hpp"
 #include "util/stringutils.hpp"
 
 namespace gorp {
@@ -201,6 +202,12 @@ int main(int argc, char** argv)
 
     // Create the main Core object.
     std::vector<std::string> parameters(argv + 1, argv + argc);
+
+#ifdef GORP_TARGET_WINDOWS
+    // Check if gorp.exe is already running.
+    gorp::Process::check_if_already_running();
+#endif
+    
     try { core().init_core(parameters); }
     catch (std::exception &e)
     {

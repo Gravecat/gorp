@@ -11,20 +11,19 @@
 #include "core/game.hpp"
 #include "core/terminal/terminal.hpp"
 #include "ui/element.hpp"
-//#include "ui/title.hpp"
+#include "ui/title.hpp"
 #include "util/math/random.hpp"
 
 namespace gorp {
 
-//Game::Game() : title_screen_ptr_(nullptr), ui_element_id_counter_(0) { }
-Game::Game() : ui_element_id_counter_(0) { }
+Game::Game() : title_screen_ptr_(nullptr), ui_element_id_counter_(0) { }
 
 // Destructor, cleans up attached classes.
 Game::~Game()
 {
     for (unsigned int i = 0; i < ui_elements_.size(); i++)
         ui_elements_.at(i).reset(nullptr);
-    //title_screen_ptr_.reset(nullptr);
+    title_screen_ptr_.reset(nullptr);
 }
 
 // Adds a new UI element to the screen.
@@ -38,9 +37,8 @@ uint32_t Game::add_element(std::unique_ptr<Element> element)
 // Starts the game, in the form of a title screen followed by the main game loop.
 void Game::begin()
 {
-    //title_screen_ptr_ = std::make_unique<TitleScreen>();
+    title_screen_ptr_ = std::make_unique<TitleScreen>();
 
-    /*
     const auto result = title_screen_ptr_->render();
     switch(result)
     {
@@ -52,7 +50,6 @@ void Game::begin()
             new_game();
             break;
     }
-    */
     main_loop();
 }
 

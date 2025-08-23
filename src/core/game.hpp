@@ -11,7 +11,7 @@
 namespace gorp {
 
 class Element;      // defined in ui/element.hpp
-//class TitleScreen;  // defined in ui/title.hpp
+class TitleScreen;  // defined in ui/title.hpp
 
 class Game {
 public:
@@ -29,7 +29,7 @@ private:
     void    clear_elements();   // Clears all UI elements.
     void    new_game();         // Sets up for a new game!
 
-//    std::unique_ptr<TitleScreen>    title_screen_ptr_;  // Pointer to the title screen object.
+    std::unique_ptr<TitleScreen>    title_screen_ptr_;  // Pointer to the title screen object.
     std::vector<std::unique_ptr<Element>>   ui_elements_;       // The UI elements on screen right now.
     uint32_t                        ui_element_id_counter_;     // The counter for generating unique UI element IDs.
 };

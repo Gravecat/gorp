@@ -16,7 +16,7 @@ namespace gorp {
 
 class SfxrSample;       // defined in 3rdparty/sfxr/sfxr.hpp
 class SfxrSoundStream;  // defined in 3rdparty/sfxr/sfxr.hpp
-class Window;           // defined in core/window.hpp
+class Window;           // defined in core/terminal/window.hpp
 
 class Terminal {
 public:

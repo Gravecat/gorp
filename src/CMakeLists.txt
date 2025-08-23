@@ -117,6 +117,7 @@ set(GORP_CPPS
   core/terminal/terminal.cpp
   core/terminal/window.cpp
   ui/element.cpp
+  ui/title.cpp
   util/file/binpath.cpp
   util/file/filereader.cpp
   util/file/fileutils.cpp

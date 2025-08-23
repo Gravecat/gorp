@@ -12,6 +12,7 @@
 #include "core/terminal/window.hpp"
 #include "SFML/Audio.hpp"
 #include "ui/title.hpp"
+#include "util/file/fileutils.hpp"
 #include "util/math/random.hpp"
 
 namespace gorp {
@@ -50,17 +51,14 @@ TitleScreen::TitleScreen() : blinking_(false), music_(nullptr), title_screen_win
     phrase_ = phrases.at(random::get<int>(0, phrases.size() - 1));
 
     data.confirm_tag(Datafile::DATA_BLOCK_END);
+    */
 
     // Load the title-screen music.
-    data.set_index("OGG:march");
-    data.confirm_tag(Datafile::DATA_BLOCK);
-    music_vec_ = data.read_char_vec();
+    music_vec_ = fileutils::file_to_char_vec(core().datafile("ogg/march.ogg"));
     music_ = std::make_unique<sf::Music>();
     if (!music_->openFromMemory(music_vec_.data(), music_vec_.size())) throw std::runtime_error("Cannot load audio file: march");
     music_->setVolume(75.0f);
     music_->setLooping(true);
-    data.confirm_tag(Datafile::DATA_BLOCK_END);
-    */
 }
 
 // Destructor, explicitly frees memory used.
@@ -91,7 +89,7 @@ TitleScreen::TitleOption TitleScreen::render()
         }
         else if (!music_started && audio_timer.getElapsedTime().asMilliseconds() > 5000)
         {
-            //music_->play();
+            music_->play();
             music_started = true;
         }
         if (blinking_ && blink_timer.getElapsedTime().asMilliseconds() > 200)
@@ -112,11 +110,11 @@ TitleScreen::TitleOption TitleScreen::render()
         switch(result)
         {
             case '1':
-                //music_->stop();
+                music_->stop();
                 term.remove_window(title_screen_window_);
                 return TitleOption::NEW_GAME;
             case '3':
-                //music_->stop();
+                music_->stop();
                 term.remove_window(title_screen_window_);
                 return TitleOption::QUIT;
             case Key::RESIZE: redraw(); break;

@@ -96,7 +96,6 @@ void Game::leave_game() { core().destroy_core(EXIT_SUCCESS); }
 // brøether, may i have the lööps
 void Game::main_loop()
 {
-    core().log("xyzzy");
     int key = 0;
     while(true)
     {

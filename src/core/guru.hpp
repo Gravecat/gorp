@@ -39,6 +39,7 @@ private:
     time_t              cascade_timer_;     // Timer to check the speed of non-halting Guru warnings, to prevent cascade locks.
     bool                console_ready_;     // Have we fully initialized the console yet?
     bool                dead_already_;      // Have we already died? Is this crash within the Guru subsystem?
+    bool                lock_stderr_;       // Whether the stderr-checking code is allowed to run or not.
     std::stringstream   sferr_buffer_;      // Stringstream buffer used to catch sf::err() error messages.
     std::stringstream   stderr_buffer_;     // Pointer to a stringstream buffer used to catch stderr messages.
     std::streambuf*     stderr_old_;        // The old stderr buffer.

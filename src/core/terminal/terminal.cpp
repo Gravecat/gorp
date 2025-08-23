@@ -46,6 +46,7 @@ Terminal::Terminal() : current_frame_(nullptr), previous_frame_(nullptr), degaus
     core().log("Attempting to initialize SFML and create OpenGL context.");
 
     // Load the degauss sound from the game data.
+    core().log("Loading CRT degauss sound...");
     std::vector<char> degauss_data = fileutils::file_to_char_vec(core().datafile("ogg/crt-degauss.ogg"));
     if (!degauss_sound_buffer_.loadFromMemory(degauss_data.data(), degauss_data.size())) throw std::runtime_error("Could not load audio file: crt-degauss.ogg");
     degauss_sound_ = std::make_unique<sf::Sound>(degauss_sound_buffer_);
@@ -389,6 +390,7 @@ sf::Image Terminal::load_png(const std::string &filename)
 // Loads the sfxr sound samples.
 void Terminal::load_sfxr()
 {
+    core().log("Loading sfxr sound files...");
     sfxr_ = std::make_unique<SfxrSoundStream>();
     const std::string sfxr_dir = core().datafile("sfxr");
     std::vector<std::string> sfxr_files = fileutils::files_in_dir(sfxr_dir);

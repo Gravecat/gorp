@@ -29,7 +29,8 @@ int GuruMeditation::error_b() const { return error_b_; }
 void guru_intercept_signal(int sig) { core().guru().intercept_signal(sig); }
 
 // Opens the output log for messages.
-Guru::Guru() : cascade_count_(0), cascade_failure_(false), cascade_timer_(std::time(0)), console_ready_(false), dead_already_(false), stderr_old_(nullptr)
+Guru::Guru() : cascade_count_(0), cascade_failure_(false), cascade_timer_(std::time(0)), console_ready_(false), dead_already_(false), lock_stderr_(false),
+    stderr_old_(nullptr)
 {
     const std::string userdata_path = BinPath::game_path("userdata");
     fileutils::make_dir(userdata_path);
@@ -71,19 +72,23 @@ Guru::~Guru()
 // Checks stderr for any updates, puts them in the log if any exist.
 void Guru::check_stderr()
 {
+    if (lock_stderr_) return;
+    
+    lock_stderr_ = true;
     const std::string err_buffer = stderr_buffer_.str(), sf_buffer = sferr_buffer_.str();
     if (err_buffer.size())
     {
-        Guru::nonfatal(err_buffer, GURU_ERROR);
+        Guru::log(err_buffer);
         stderr_buffer_.str(std::string());
         stderr_buffer_.clear();
     }
     if (sf_buffer.size())
     {
-        Guru::nonfatal(sf_buffer, GURU_ERROR);
+        Guru::log(sf_buffer);
         sferr_buffer_.str(std::string());
         sferr_buffer_.clear();
     }
+    lock_stderr_ = false;
 }
 
 // Tells Guru that we're ready to render Guru error messages on-screen.
@@ -199,6 +204,7 @@ bool Guru::is_dead() const { return dead_already_; }
 void Guru::log(std::string msg, int type)
 {
     if (!syslog_.is_open()) return;
+    if (!lock_stderr_) check_stderr();
 
     std::string txt_tag;
     switch(type)

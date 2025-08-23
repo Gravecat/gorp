@@ -13,7 +13,7 @@ namespace gorp {
 //class Game;     // defined in core/game.hpp
 class Guru;     // defined in core/guru.hpp
 class Prefs;    // defined in misc/prefs.hpp
-//class Terminal; // defined in core/terminal.hpp
+class Terminal; // defined in core/terminal.hpp
 
 class Core {
 public:
@@ -29,7 +29,7 @@ public:
     void            log(const std::string &str, int type = Core::CORE_INFO);    // Logs a message in the system log, or prints it to std::cout.
     void            nonfatal(std::string error, int type);  // Reports a non-fatal error, which will be logged but won't halt execution unless it cascades.
     Prefs&          prefs() const;              // Returns a reference to the Prefs object.
-//    Terminal&       terminal() const;           // Returns a reference to the Terminal handler object.
+    Terminal&       terminal() const;           // Returns a reference to the Terminal handler object.
 
     static Core&    core(); // Returns a reference to the singleton Core object.
     void            init_core(std::vector<std::string> parameters);   // Sets up the core game classes and data, and the terminal subsystem.
@@ -46,7 +46,7 @@ private:
 //    std::unique_ptr<Game>       game_ptr_;      // Pointer to the Game manager object, which handles the current game state.
     std::unique_ptr<Guru>       guru_ptr_;      // Pointer to the Guru Meditation object, which handles errors and logging.
     std::unique_ptr<Prefs>      prefs_ptr_;     // Pointer to the Prefs object, which records simple user preferences.
-//    std::unique_ptr<Terminal>   terminal_ptr_;  // Pointer to the Terminal object, which handles rendering on a real or virtual terminal window.
+    std::unique_ptr<Terminal>   terminal_ptr_;  // Pointer to the Terminal object, which handles rendering on a real or virtual terminal window.
 };
 
 Core&   core(); // A shortcut to using Core::core().

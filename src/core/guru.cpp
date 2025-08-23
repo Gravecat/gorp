@@ -11,8 +11,8 @@
 #include "cmake/version.hpp"
 #include "core/core.hpp"
 #include "core/guru.hpp"
-//#include "core/terminal/terminal.hpp"
-//#include "core/terminal/window.hpp"
+#include "core/terminal/terminal.hpp"
+#include "core/terminal/window.hpp"
 #include "SFML/System.hpp"
 #include "util/file/binpath.hpp"
 #include "util/file/fileutils.hpp"
@@ -111,7 +111,6 @@ void Guru::halt(std::string error, int a, int b)
         core().destroy_core(EXIT_FAILURE);
     }
 
-    /*
     // We should be fine to start a display loop here -- if anything goes horribly wrong, dead_already_ is set and we should go to exit(EXIT_FAILURE).
     bool resized = true, needs_redraw = true, border = true;
     
@@ -147,7 +146,6 @@ void Guru::halt(std::string error, int a, int b)
             needs_redraw = true;
         }
     }
-    */
 }
 
 // As above, but with an exception instead of a string.

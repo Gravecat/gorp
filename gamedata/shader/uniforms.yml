@@ -1,0 +1,32 @@
+# shader/uniforms.yml -- Preset data for applying uniforms to the shader. This allows for tweaking the visual effects.
+
+# SPDX-FileType: SOURCE
+# SPDX-FileCopyrightText: Copyright 2025 Raine Simmons <gc@gravecat.com>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+bloomIntensity: 0.7         # 0.45
+bloomSpread: 2.0            # 2.0
+chromaticAberration: 0.8    # 0.8
+colorBleedAmount: 0.2       # 0.2
+curvature: 4.0              # 2.0
+edgeEnd: 1.08               # 1.0
+edgeStart: 0.96             # 0.85
+flickerAmount: 0.03         # 0.03
+flickerSpeed: 3.0           # 3.0
+glitchFrequency: 0.002      # 0.05
+glitchMaxIntensity: 0.005   # 0.02
+glitchMaxSize: 1.0          # 1.0
+glitchMinIntensity: -0.005  # 0.0
+glitchMinSize: 1.0          # 1.0
+jitterIntensity: 0.0003     # 0.0003
+jitterSpeed: 0.5            # 2.0
+noiseAmount: 0.015          # 0.015
+phosphorIntensity: 0.15     # 0.15
+phosphorScale: 1.5          # 0.5; may need to be adjusted with screen size?
+rollIntensity: 0.002        # 0.001
+rollSpeed: 0.00             # 0.05
+scanlineCount: 200.0        # 200.0; adjusted dynamically based on screen resolution
+scanlineDriftAmount: 0.05   # 0.2
+scanlineDriftSpeed: 0.1     # 0.5
+scanlineIntensity: 0.2      # 0.3
+vignetteIntensity: 0.23     # 0.3

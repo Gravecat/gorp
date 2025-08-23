@@ -112,6 +112,9 @@ set(GORP_CPPS
   core/core.cpp
   core/guru.cpp
   core/prefs.cpp
+  core/terminal/colour-maps.cpp
+  core/terminal/terminal.cpp
+  core/terminal/window.cpp
   util/file/binpath.cpp
   util/file/filereader.cpp
   util/file/fileutils.cpp

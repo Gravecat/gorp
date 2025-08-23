@@ -7,7 +7,7 @@
 #include <fstream>
 
 #include "core/core.hpp"
-#include "util/file/binpath.hpp"
+//#include "util/file/binpath.hpp"
 #include "util/file/filereader.hpp"
 #include "util/file/fileutils.hpp"
 
@@ -15,9 +15,9 @@ namespace gorp {
 
 // Loads a data file into memory.
 FileReader::FileReader(std::string filename, bool allow_missing_file) : read_index_(0)
-{
-    core().log("Loading and parsing data file " + filename + ".");
-    filename = BinPath::game_path(filename);
+{   
+    //core().log("Loading and parsing data file " + filename + ".");
+    //filename = BinPath::game_path(filename);
     if (!fileutils::file_exists(filename))
     {
         if (allow_missing_file) return;

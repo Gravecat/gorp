@@ -24,9 +24,8 @@ class SfxrSoundStream : public sf::SoundStream
 {
 public:
             SfxrSoundStream();
-    void    load_settings(const std::string filename);
+    void    load_settings(SfxrSample new_sample);
     void    play_sample();
-    void    play_sample(const std::string filename);
     void    reset();
 
 private:

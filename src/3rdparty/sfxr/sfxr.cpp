@@ -47,73 +47,11 @@ namespace gorp {
 SfxrSoundStream::SfxrSoundStream() : playing_sample(false), channel_count(1), sample_rate(44100)
 { initialize(channel_count, sample_rate, {}); } // Initialize the base class
 
-void SfxrSoundStream::load_settings(const std::string filename)
-{
-    const std::string filename_full = core().datafile("sfxr/" + filename + ".sfs");
-    if (!fileutils::file_exists(filename_full)) throw GuruMeditation("Could not find sfxr file: " + filename);
-    FILE* file = fopen(filename_full.c_str(), "rb");
-    if (!file) throw GuruMeditation("Could not find sfxr file: " + filename);
-
-    size_t n;
-	(void)n;
-	int version = 0;
-	n = fread(&version, 1, sizeof(int), file);
-	if (version != 100 && version != 101 && version != 102)
-		core().guru().halt("Invalid sfxr file version (" + filename + ")", version);
-
-	n = fread(&loaded_sample.wave_type, 1, sizeof(int), file);
-
-	loaded_sample.sound_vol = 0.5f;
-	if (version == 102) n = fread(&loaded_sample.sound_vol, 1, sizeof(float), file);
-
-	n = fread(&loaded_sample.p_base_freq, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_freq_limit, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_freq_ramp, 1, sizeof(float), file);
-	if (version >= 101) n = fread(&loaded_sample.p_freq_dramp, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_duty, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_duty_ramp, 1, sizeof(float), file);
-
-	n = fread(&loaded_sample.p_vib_strength, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_vib_speed, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_vib_delay, 1, sizeof(float), file);
-
-	n = fread(&loaded_sample.p_env_attack, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_env_sustain, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_env_decay, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_env_punch, 1, sizeof(float), file);
-
-	n = fread(&loaded_sample.filter_on, 1, sizeof(bool), file);
-	n = fread(&loaded_sample.p_lpf_resonance, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_lpf_freq, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_lpf_ramp, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_hpf_freq, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_hpf_ramp, 1, sizeof(float), file);
-	
-	n = fread(&loaded_sample.p_pha_offset, 1, sizeof(float), file);
-	n = fread(&loaded_sample.p_pha_ramp, 1, sizeof(float), file);
-
-	n = fread(&loaded_sample.p_repeat_speed, 1, sizeof(float), file);
-
-	if(version >= 101)
-	{
-		n = fread(&loaded_sample.p_arp_speed, 1, sizeof(float), file);
-		n = fread(&loaded_sample.p_arp_mod, 1, sizeof(float), file);
-	}
-
-	fclose(file);
-}
+void SfxrSoundStream::load_settings(SfxrSample new_sample) { loaded_sample = new_sample; }
 
 void SfxrSoundStream::play_sample()
 {
     ResetSample(false);
-    playing_sample = true;
-    play();
-}
-
-void SfxrSoundStream::play_sample(const std::string filename)
-{
-    load_settings(filename);
-    ResetSample(true);
     playing_sample = true;
     play();
 }

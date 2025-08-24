@@ -1,5 +1,11 @@
 # Build Instructions
 
+## Important Note!
+
+This is very early days for this project. Long-term, I plan on adjusting the CMake build files to accomodate many compilers. Right now, it only works with GCC,
+and Windows builds require cross-compiling from WSL or Linux, just because that's the build environment I'm using. I'll improve things on the build front once
+the project gets more fleshed-out.
+
 ## Compiling SFML
 
 GORP requires the headers and compiled library files (.a or .lib) for [SFML 3](https://github.com/SFML/SFML). However you choose to acquire these files, you

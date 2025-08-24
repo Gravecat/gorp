@@ -116,6 +116,7 @@ set(GORP_CPPS
   core/terminal/colour-maps.cpp
   core/terminal/terminal.cpp
   core/terminal/window.cpp
+  misc/namegen.cpp
   ui/element.cpp
   ui/title.cpp
   util/file/binpath.cpp

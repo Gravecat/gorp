@@ -13,10 +13,11 @@
 #include "ui/element.hpp"
 #include "ui/title.hpp"
 #include "util/math/random.hpp"
+#include "world/codex.hpp"
 
 namespace gorp {
 
-Game::Game() : title_screen_ptr_(nullptr), ui_element_id_counter_(0) { }
+Game::Game() : codex_ptr_(nullptr), title_screen_ptr_(nullptr), ui_element_id_counter_(0) { }
 
 // Destructor, cleans up attached classes.
 Game::~Game()
@@ -24,6 +25,7 @@ Game::~Game()
     for (unsigned int i = 0; i < ui_elements_.size(); i++)
         ui_elements_.at(i).reset(nullptr);
     title_screen_ptr_.reset(nullptr);
+    codex_ptr_.reset(nullptr);
 }
 
 // Adds a new UI element to the screen.
@@ -37,6 +39,7 @@ uint32_t Game::add_element(std::unique_ptr<Element> element)
 // Starts the game, in the form of a title screen followed by the main game loop.
 void Game::begin()
 {
+    codex_ptr_ = std::make_unique<Codex>();
     title_screen_ptr_ = std::make_unique<TitleScreen>();
 
     const auto result = title_screen_ptr_->render();
@@ -59,6 +62,13 @@ void Game::clear_elements()
     for (unsigned int i = 0; i < ui_elements_.size(); i++)
         ui_elements_.at(i)->destroy_window();
     ui_elements_.clear();
+}
+
+// Returns a reference to the Codex object.
+Codex& Game::codex() const
+{
+    if (!codex_ptr_) throw std::runtime_error("Attempt to access null Codex pointer!");
+    return *codex_ptr_;
 }
 
 // Deletes a specified UI element.

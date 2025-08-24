@@ -126,6 +126,7 @@ set(GORP_CPPS
   util/file/yaml.cpp
   util/process.cpp
   util/stringutils.cpp
+  world/codex.cpp
 )
 
 # Binary file. GORP_RC should be blank for non-Windows builds.
